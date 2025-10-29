@@ -170,7 +170,7 @@
                     <p class="text-sm font-medium">管理员</p>
                     <p class="text-xs text-text-secondary">在线</p>
                 </div>
-                <button class="ml-auto text-text-secondary hover:text-text-primary">
+                <button id="logout-btn" class="ml-auto text-text-secondary hover:text-text-primary">
                     <i class="fa fa-sign-out"></i>
                 </button>
             </div>
@@ -351,7 +351,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">车辆超速</p>
-                                            <p class="text-xs text-text-secondary">G56杭瑞高速 K125+300</p>
+                                            <p class="text-xs text-text-secondary">G15沈海高速 K125+300</p>
                                             <p class="text-xs text-text-secondary mt-1">10分钟前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -364,7 +364,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">设备维护完成</p>
-                                            <p class="text-xs text-text-secondary">大托收费站监控设备</p>
+                                            <p class="text-xs text-text-secondary">泉州收费站监控设备</p>
                                             <p class="text-xs text-text-secondary mt-1">30分钟前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -377,7 +377,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">设备离线</p>
-                                            <p class="text-xs text-text-secondary">长沙西服务区摄像头#3</p>
+                                            <p class="text-xs text-text-secondary">厦门服务区摄像头#3</p>
                                             <p class="text-xs text-text-secondary mt-1">1小时前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -390,7 +390,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">道路施工</p>
-                                            <p class="text-xs text-text-secondary">G0421许广高速 K45+200</p>
+                                            <p class="text-xs text-text-secondary">G72泉南高速 K45+200</p>
                                             <p class="text-xs text-text-secondary mt-1">2小时前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -623,6 +623,29 @@
     </div>
     
     <script>
+        // 检查登录状态
+        function checkLoginStatus() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('isLoggedIn=')) {
+                    const value = cookie.substring('isLoggedIn='.length);
+                    return value === 'true';
+                }
+            }
+            return false;
+        }
+        
+        // 如果未登录，跳转到登录页面
+        if (!checkLoginStatus()) {
+            window.location.href = 'login.html';
+        }
+        
+        // 清除cookie
+        function clearCookie(name) {
+            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+        
         // 更新当前时间
         function updateCurrentTime() {
             const now = new Date();
@@ -775,6 +798,14 @@
             
             // 初始化图表（如果有）
             // 这里可以添加Chart.js图表初始化代码
+            
+            // 退出登录按钮点击事件
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('确定确定要退出登录吗？')) {
+                    clearCookie('isLoggedIn');
+                    window.location.href = 'login.html';
+                }
+            });
         });
     </script>
 
