@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>湖南省高速公路智能交通监控管理平台</title>
@@ -77,7 +75,7 @@
 <body class="bg-dark text-text-primary min-h-screen">
     <div class="flex h-screen overflow-hidden">
         <!-- 左侧菜单 -->
-        <div class="w-64 bg-dark-light border-r border-gray-700 flex flex-col">
+        <div class="w-64 bg-dark-light border-r border-gray-700 flex flex-col h-full">
             <!-- 平台标题 -->
             <div class="p-4 border-b border-gray-700">
                 <h1 class="text-xl font-bold text-primary flex items-center">
@@ -314,9 +312,9 @@
                 <!-- 地图和数据区域 -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- 左侧数据列表 -->
-                    <div class="lg:col-span-1">
+                    <div class="lg:col-span-1 flex flex-col h-full">
                         <!-- 告警列表 -->
-                        <div class="bg-dark-light rounded-lg border border-gray-700 mb-6">
+                        <div class="bg-dark-light rounded-lg border border-gray-700 mb-6 flex-shrink-0">
                             <div class="p-4 border-b border-gray-700 flex items-center justify-between">
                                 <h3 class="font-semibold flex items-center">
                                     <i class="fa fa-exclamation-circle text-yellow-500 mr-2"></i>
@@ -335,7 +333,7 @@
                         </div>
                         
                         <!-- 最近事件 -->
-                        <div class="bg-dark-light rounded-lg border border-gray-700">
+                        <div class="bg-dark-light rounded-lg border border-gray-700 flex-grow flex flex-col">
                             <div class="p-4 border-b border-gray-700 flex items-center justify-between">
                                 <h3 class="font-semibold flex items-center">
                                     <i class="fa fa-history text-blue-500 mr-2"></i>
@@ -345,7 +343,7 @@
                                     查看全部
                                 </button>
                             </div>
-                            <div class="p-4 max-h-64 overflow-y-auto scrollbar-hide">
+                            <div class="p-4 flex-grow overflow-y-auto scrollbar-hide">
                                 <ul class="space-y-4">
                                     <li class="flex items-start">
                                         <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 flex-shrink-0">
@@ -353,7 +351,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">车辆超速</p>
-                                            <p class="text-xs text-text-secondary">G15沈海高速 K125+300</p>
+                                            <p class="text-xs text-text-secondary">G56杭瑞高速 K125+300</p>
                                             <p class="text-xs text-text-secondary mt-1">10分钟前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -366,7 +364,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">设备维护完成</p>
-                                            <p class="text-xs text-text-secondary">泉州收费站监控设备</p>
+                                            <p class="text-xs text-text-secondary">大托收费站监控设备</p>
                                             <p class="text-xs text-text-secondary mt-1">30分钟前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -379,7 +377,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">设备离线</p>
-                                            <p class="text-xs text-text-secondary">厦门服务区摄像头#3</p>
+                                            <p class="text-xs text-text-secondary">长沙西服务区摄像头#3</p>
                                             <p class="text-xs text-text-secondary mt-1">1小时前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -392,7 +390,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium">道路施工</p>
-                                            <p class="text-xs text-text-secondary">G72泉南高速 K45+200</p>
+                                            <p class="text-xs text-text-secondary">G0421许广高速 K45+200</p>
                                             <p class="text-xs text-text-secondary mt-1">2小时前</p>
                                         </div>
                                         <div class="ml-auto">
@@ -427,9 +425,7 @@
                                     <!-- 地图背景 -->
                                     <div class="absolute inset-0 bg-dark-blue/30 flex items-center justify-center">
                                         <!-- 使用中国地图图片作为背景 -->
-                                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/6dd0ce20104ee2f5978581d05f03fa1a~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1777276489&x-signature=3pTZ7FrpKYzaze4O193Mw4%2BFfbs%3D" 
-                                             alt="中国地图" 
-                                             class="w-full h-full object-contain opacity-70">
+                                        <img src="https://p3-search.byteimg.com/obj/pgc-image/22a0b9c77f8b40b2bdf14b466900344c" alt="中国地图" class="w-full h-full object-contain opacity-70">
                                     </div>
                                     
                                     <!-- 监控点标记 -->
