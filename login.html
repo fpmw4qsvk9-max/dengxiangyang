@@ -1,210 +1,1935 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>湘交科数字运维平台 - 登录</title>
-    <!-- Tailwind CSS v3 -->
+    <title>基础设施健康监测与智能巡检技术总结汇报</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 统一的 Tailwind 配置 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        primary: '#0ea5e9',
-                        secondary: '#10b981',
-                        dark: '#0f172a',
-                        'dark-light': '#1e293b',
-                        'dark-blue': '#0c4a6e',
-                        'light-blue': '#38bdf8',
-                        'text-primary': '#f8fafc',
-                        'text-secondary': '#94a3b8'
-                    },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        'serif': ['Noto Serif SC', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'earth': {
+                            50: '#faf8f5',
+                            100: '#f5f0e8',
+                            200: '#e8dcc7',
+                            300: '#d9c5a3',
+                            400: '#c8a87d',
+                            500: '#b8925f',
+                            600: '#a67c52',
+                            700: '#8a6545',
+                            800: '#70543c',
+                            900: '#5c4532',
+                        },
+                        'teal': {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
                     }
                 }
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            }
-            .card-glow {
-                box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-            }
-            .bg-gradient-login {
-                background: linear-gradient(135deg, #0f172a 0%, #0c4a6e 100%);
-            }
-            .input-focus {
-                @apply focus:ring-2 focus:ring-primary focus:border-transparent;
-            }
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #e8dcc7 100%);
         }
-    </style>
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .backdrop-blur-subtle {
+            backdrop-filter: blur(8px);
+        }
+        .citation-link {
+            color: #0d9488;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #0d9488;
+            transition: all 0.2s ease;
+        }
+        .citation-link:hover {
+            color: #0f766e;
+            border-bottom-style: solid;
+        }
+        .toc-link {
+            transition: all 0.3s ease;
+        }
+        .toc-link:hover {
+            color: #0d9488;
+            transform: translateX(4px);
+        }
+        .section-divider {
+            background: linear-gradient(90deg, transparent 0%, #d9c5a3 50%, transparent 100%);
+            height: 1px;
+            margin: 3rem 0;
+        }
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+        /* New Mermaid theme variables for better contrast */
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .node polygon {
+            fill: #ffffff;
+            stroke: #0d9488;
+            stroke-width: 2px;
+        }
+        .mermaid .node .label {
+            color: #1f2937;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            fill: #1f2937;
+        }
+        .mermaid .edgePath .path {
+            stroke: #6b7280;
+            stroke-width: 2px;
+        }
+        .mermaid .edgeLabel {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #374151;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+        .mermaid .cluster rect {
+            fill: #f0fdfa;
+            stroke: #14b8a6;
+            stroke-width: 2px;
+        }
+        .mermaid .cluster .label {
+            color: #0f766e;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: #0f766e;
+        }
+        /* Enhanced node styling for better contrast */
+        .mermaid .node[class*="default"] rect,
+        .mermaid .node[class*="default"] circle {
+            fill: #ffffff;
+            stroke: #0d9488;
+        }
+        .mermaid .node[class*="default"] .label {
+            color: #1f2937;
+            fill: #1f2937;
+        }
+    @media (max-width: 1024px) {
+        .mermaid-control-btn:not(.reset-zoom) {
+            display: none;
+        }
+        .mermaid-controls {
+            top: auto;
+            bottom: 15px;
+            right: 15px;
+        }
+    }
+</style>
+  <base target="_blank">
 </head>
-<body class="bg-gradient-login min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- 登录卡片 -->
-        <div class="bg-dark-light rounded-xl border border-gray-700 p-8 card-glow">
-            <!-- 平台标志 -->
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center mb-4">
-                    <i class="fa fa-road text-3xl text-primary"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-white">湘交科数字运维平台</h1>
-                <p class="text-text-secondary mt-1">湖南省高速公路管理系统</p>
+
+  <body class="bg-earth-50 text-gray-800 font-sans">
+    <!-- Fixed Table of Contents -->
+    <nav class="fixed left-0 top-0 h-screen w-80 bg-white/90 backdrop-blur-subtle border-r border-earth-200 z-50 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300" id="toc">
+      <div class="p-6">
+        <button id="toc-close-button" class="lg:hidden absolute top-4 right-4 text-gray-500 hover:text-teal-600">
+          <i class="fas fa-times"></i>
+        </button>
+        <h3 class="text-lg font-serif font-semibold text-teal-800 mb-4">目录导航</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#overview" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">1. 总体概述</a>
+          </li>
+          <li>
+            <a href="#lightweight-sensors" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">2. 轻量化监测传感器</a>
+          </li>
+          <li>
+            <a href="#fusion-inspection" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">3. 多源融合与智能巡检</a>
+          </li>
+          <li>
+            <a href="#system-architecture" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">4. 系统架构与核心能力</a>
+          </li>
+          <li>
+            <a href="#applications" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">5. 实际应用案例</a>
+          </li>
+          <li>
+            <a href="#future-outlook" class="toc-link block py-2 px-3 rounded hover:bg-earth-100">6. 未来发展展望</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Toggle Button for TOC (Mobile Only) -->
+    <button id="toc-toggle-button" class="fixed top-4 left-4 z-50 lg:hidden bg-teal-600 text-white p-3 rounded-full shadow-lg">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="ml-0 lg:ml-80 min-h-screen">
+      <!-- Hero Section -->
+      <section class="hero-gradient py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+          <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="基础设施健康监测系统概念图" class="w-full h-full object-cover" size="large" aspect="wide" query="基础设施健康监测系统" referrerpolicy="no-referrer" />
+        </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <!-- Main Title -->
+            <div class="lg:col-span-2">
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-teal-800 mb-6 leading-tight">
+                <em class="italic text-shadow">基础设施健康监测与智能巡检</em>
+                <br>
+                <span class="text-2xl sm:text-3xl lg:text-4xl font-normal">技术总结汇报</span>
+              </h1>
+              <p class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed mb-8">
+                构建"空-天-地"一体化智能监测体系，实现从"重装高耗"向"轻量智能"的现代化转型
+              </p>
             </div>
-            
-            <!-- 登录表单 -->
-            <form id="login-form" class="space-y-6">
-                <div>
-                    <label for="username" class="block text-sm font-medium text-text-secondary mb-1">用户名</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-secondary">
-                            <i class="fa fa-user"></i>
-                        </span>
-                        <input type="text" id="username" name="username" value="admin" 
-                               class="bg-dark w-full pl-10 pr-4 py-2 rounded-lg border border-gray-600 text-white input-focus">
-                    </div>
+
+            <!-- Key Highlights Grid -->
+            <div class="space-y-4">
+              <div class="bg-white/80 backdrop-blur-subtle p-4 rounded-lg border border-earth-200">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-satellite text-teal-600 mr-3"></i>
+                  <h3 class="font-semibold text-teal-800">空天地一体化</h3>
                 </div>
-                
-                <div>
-                    <label for="password" class="block text-sm font-medium text-text-secondary mb-1">密码</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-secondary">
-                            <i class="fa fa-lock"></i>
-                        </span>
-                        <input type="password" id="password" name="password" value="admin" 
-                               class="bg-dark w-full pl-10 pr-4 py-2 rounded-lg border border-gray-600 text-white input-focus">
-                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-text-secondary hover:text-text-primary">
-                            <i class="fa fa-eye-slash"></i>
-                        </button>
-                    </div>
+                <p class="text-sm text-gray-600">InSAR卫星遥感、无人机巡检、地面传感网络深度融合</p>
+              </div>
+
+              <div class="bg-white/80 backdrop-blur-subtle p-4 rounded-lg border border-earth-200">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-microchip text-teal-600 mr-3"></i>
+                  <h3 class="font-semibold text-teal-800">MEMS轻量化</h3>
                 </div>
-                
-                <div class="flex items-center justify-between">
+                <p class="text-sm text-gray-600">基于微机电系统的多参数集成监测设备</p>
+              </div>
+
+              <div class="bg-white/80 backdrop-blur-subtle p-4 rounded-lg border border-earth-200">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-brain text-teal-600 mr-3"></i>
+                  <h3 class="font-semibold text-teal-800">边缘计算AI</h3>
+                </div>
+                <p class="text-sm text-gray-600">实时数据处理与智能分析，毫秒级预警响应</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content Sections -->
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-12">
+
+        <!-- Section 1: Overview -->
+        <section id="overview" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">总体概述：构建"空-天-地"一体化智能监测体系</h2>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200">
+              <h3 class="text-xl font-semibold text-teal-800 mb-4 flex items-center">
+                <i class="fas fa-exclamation-triangle text-amber-500 mr-3"></i>
+                背景与意义
+              </h3>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                随着我国交通强国战略的深入实施，公路、桥梁、隧道等基础设施网络规模持续扩大。然而，在役基础设施正面临严峻的老龄化和安全风险挑战。据统计，我国现有公路桥梁总量已突破百万座，其中<strong>中小跨径桥梁占比超过83%</strong>，且大量桥梁已进入或接近设计使用年限，<strong>危桥总数高达6.8万座。</strong>
+              </p>
+              <p class="text-gray-700 leading-relaxed">
+                近年来，如<strong>2024年陕西商洛柞水大桥垮塌、四川雅康高速公路隧间桥垮塌</strong>等事故，为基础设施的安全运维敲响了警钟，暴露出传统监测手段在覆盖范围、时效性和经济性上的短板。
+              </p>
+            </div>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200">
+              <h3 class="text-xl font-semibold text-teal-800 mb-4 flex items-center">
+                <i class="fas fa-lightbulb text-yellow-500 mr-3"></i>
+                核心理念
+              </h3>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                为应对上述挑战，基础设施健康监测技术正经历从<strong>"重装高耗"向"轻量智能"</strong>的深刻转型。
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-start">
+                  <i class="fas fa-check-circle text-teal-600 mt-1 mr-3"></i>
+                  <div>
+                    <strong>硬件层面：</strong>采用基于MEMS技术的微型化、低功耗传感器
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-check-circle text-teal-600 mt-1 mr-3"></i>
+                  <div>
+                    <strong>安装方式：</strong>推广非侵入式或微创安装技术
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-check-circle text-teal-600 mt-1 mr-3"></i>
+                  <div>
+                    <strong>数据处理：</strong>引入边缘计算技术，实现本地分析与快速预警
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Technology Path Diagram -->
+          <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200 mb-8">
+            <h3 class="text-xl font-semibold text-teal-800 mb-6 text-center">技术路径架构</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid" id="mermaid-1">
+                graph TD
+                A["空-天-地一体化监测"] --> B["多源传感技术"]
+                B --> C["天基监测: InSAR卫星遥感"]
+                B --> D["空基监测: 无人机巡检"]
+                B --> E["地基监测: MEMS传感器"]
+
+                A --> F["边缘计算与AI分析"]
+                F --> G["实时响应: 秒级预警"]
+                F --> H["降低负载: 带宽需求降低90%"]
+                F --> I["智能分析: 模式识别"]
+
+                G --> J["安全韧性评估"]
+                H --> J
+                I --> J
+
+                J --> K["主动预防决策"]
+
+                style A fill:#f0fdfa,stroke:#0d9488,stroke-width:3px,color:#1f2937
+                style J fill:#f0fdfa,stroke:#0d9488,stroke-width:3px,color:#1f2937
+                style K fill:#b8925f,stroke:#8a6545,stroke-width:3px,color:#fff
+                style B fill:#ffffff,stroke:#0d9488,stroke-width:2px,color:#1f2937
+                style F fill:#ffffff,stroke:#0d9488,stroke-width:2px,color:#1f2937
+                style C fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style D fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style E fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style G fill:#ffffff,stroke:#2dd4bf,stroke-width:2px,color:#1f2937
+                style H fill:#ffffff,stroke:#2dd4bf,stroke-width:2px,color:#1f2937
+                style I fill:#ffffff,stroke:#2dd4bf,stroke-width:2px,color:#1f2937
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-teal-50 to-earth-50 rounded-lg p-8 border border-teal-200">
+            <h3 class="text-xl font-semibold text-teal-800 mb-4 flex items-center">
+              <i class="fas fa-key text-teal-600 mr-3"></i>
+              关键技术要素
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center">
+                <i class="fas fa-eye text-3xl text-teal-600 mb-3"></i>
+                <h4 class="font-semibold text-teal-800 mb-2">微光视觉</h4>
+                <p class="text-sm text-gray-600">7×24小时全天候监控，低照度环境下清晰成像</p>
+              </div>
+              <div class="text-center">
+                <i class="fas fa-expand-arrows-alt text-3xl text-teal-600 mb-3"></i>
+                <h4 class="font-semibold text-teal-800 mb-2">超广视角</h4>
+                <p class="text-sm text-gray-600">单台设备实现全断面覆盖，无死角观测</p>
+              </div>
+              <div class="text-center">
+                <i class="fas fa-layer-group text-3xl text-teal-600 mb-3"></i>
+                <h4 class="font-semibold text-teal-800 mb-2">多灾害耦合</h4>
+                <p class="text-sm text-gray-600">综合分析多源数据，提升预警准确性</p>
+              </div>
+              <div class="text-center">
+                <i class="fas fa-shield-alt text-3xl text-teal-600 mb-3"></i>
+                <h4 class="font-semibold text-teal-800 mb-2">安全韧性</h4>
+                <p class="text-sm text-gray-600">量化评估基础设施抗冲击和恢复能力</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 2: Lightweight Sensors -->
+        <section id="lightweight-sensors" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">轻量化监测传感器技术研究与应用</h2>
+
+          <!-- MEMS Sensors -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-microchip text-teal-600 mr-3"></i>
+              基于MEMS芯片的桥梁简易垮塌感知设备
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-cog text-amber-500 mr-2"></i>
+                  技术原理
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  利用微机电系统（MEMS）技术，将加速度计、应变计、倾角计、温度传感器等多种功能集成在一块微小的硅基芯片上。
+                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 实时监测振动频率和振幅变化</li>
+                  <li>• 精确测量结构微小倾斜</li>
+                  <li>• 环境温度补偿确保数据准确性</li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-star text-yellow-500 mr-2"></i>
+                  系统特点
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <span class="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded mr-3">低成本</span>
+                    <span class="text-sm text-gray-600">规模化生产，单个传感器成本显著降低</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded mr-3">低功耗</span>
+                    <span class="text-sm text-gray-600">可采用电池供电或能量采集技术</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-3">高集成</span>
+                    <span class="text-sm text-gray-600">单个设备替代多个传统传感器</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mr-3">易部署</span>
+                    <span class="text-sm text-gray-600">非侵入式安装，无需结构改造</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+                  应用场景
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  主要应用于<strong>中小跨径桥梁</strong>以及存在安全隐患的<strong>危旧桥梁</strong>健康监测。
+                </p>
+                <div class="bg-earth-50 p-3 rounded text-sm">
+                  <strong>案例：</strong>湖南省国省干线G107锦星桥、张家坝桥等常规桥梁应用集成振动、倾斜、温度传感器的设备，对汛期风险进行针对性监测。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Displacement System -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-camera text-teal-600 mr-3"></i>
+              固定式视觉位移系统
+            </h3>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200 mb-6">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <h4 class="font-semibold text-teal-800 mb-4">技术原理</h4>
+                  <p class="text-gray-700 leading-relaxed mb-4">
+                    基于机器视觉的亚像素级位移测量技术，利用高精度工业相机和数字图像相关（DIC）算法，实现毫米级甚至亚毫米级的位移测量精度。
+                  </p>
+                  <div class="bg-teal-50 p-4 rounded-lg">
+                    <h5 class="font-medium text-teal-800 mb-2">核心优势</h5>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                      <li>• 非接触式测量，无需结构改造</li>
+                      <li>• 亚像素级测量精度</li>
+                      <li>• 实时动态监测，高频采样</li>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <img src="固定式视觉监测系统.png" alt="桥梁位移监测摄像头设备" class="h-full h-64 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="桥梁位移监测系统" referrerpolicy="no-referrer" />
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50 to-teal-50 rounded-lg p-6 border border-blue-200">
+              <h4 class="font-semibold text-teal-800 mb-3">典型应用案例</h4>
+              <p class="text-gray-700 text-sm">
+                在<strong>张家界某边坡</strong>的结构监测试点工程中，部署了<strong>10套视觉位移计</strong>用于隧道结构的实时监测，充分证明了该技术的实际应用价值。
+              </p>
+            </div>
+          </div>
+
+          <!-- Radar Monitoring -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-satellite-dish text-teal-600 mr-3"></i>
+              数字阵列形变监测雷达
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">技术原理</h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  基于合成孔径雷达（SAR）和干涉测量技术，通过雷达天线阵列发射微波信号，利用回波信号的相位变化反演地表形变信息。
+                </p>
+                <div class="space-y-2">
+                  <div class="flex items-start">
+                    <i class="fas fa-wave-square text-teal-600 mt-1 mr-2 text-xs"></i>
+                    <span class="text-sm text-gray-600">地基合成孔径雷达干涉测量（GB-InSAR）</span>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-bullseye text-teal-600 mt-1 mr-2 text-xs"></i>
+                    <span class="text-sm text-gray-600">数字阵列技术实现快速连续观测</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">核心特点</h4>
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <i class="fas fa-clock text-blue-500 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">全天时全天候</strong>
+                      <p class="text-xs text-gray-600">微波信号穿透云层雨雾，7×24小时监测</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-expand text-green-500 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">大范围高精度</strong>
+                      <p class="text-xs text-gray-600">单台设备覆盖数平方公里，亚毫米级精度</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-hand-paper text-purple-500 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">非接触测量</strong>
+                      <p class="text-xs text-gray-600">无需布设传感器，适用于危险区域</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 3: Multi-source Fusion -->
+        <section id="fusion-inspection" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">多源融合与智能巡检技术</h2>
+
+          <!-- Radar-Video Fusion -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-layer-group text-teal-600 mr-3"></i>
+              雷视一体位移监测系统
+            </h3>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200 mb-6">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h4 class="font-semibold text-teal-800 mb-4">深度融合技术</h4>
+                  <p class="text-gray-700 leading-relaxed mb-4">
+                    将<strong>微波雷达的定量探测能力</strong>与<strong>视觉AI传感器的定性识别能力</strong>进行深度融合，实现"1+1>2"的感知效果。
+                  </p>
+                  <div class="space-y-3">
+                    <div class="bg-blue-50 p-3 rounded">
+                      <strong class="text-blue-800">毫米波雷达：</strong>
+                      <span class="text-sm text-gray-700">精确测量距离、速度，不受光照天气影响</span>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded">
+                      <strong class="text-green-800">视觉AI传感器：</strong>
+                      <span class="text-sm text-gray-700">高分辨率图像识别，目标分类和行为分析</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="雷视一体化监测系统设备" class="w-full h-64 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="雷视一体化监测系统" referrerpolicy="no-referrer" />
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                <h4 class="font-semibold text-teal-800 mb-3">双重感知能力</h4>
+                <div class="space-y-3">
+                  <div>
+                    <strong class="text-blue-800">定量监测：</strong>
+                    <p class="text-sm text-gray-700">亚毫米级精度位移测量，交通参数检测精度达99%以上</p>
+                  </div>
+                  <div>
+                    <strong class="text-green-800">定性验证：</strong>
+                    <p class="text-sm text-gray-700">高清影像人工复核，有效降低误报率</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6 border border-green-200">
+                <h4 class="font-semibold text-teal-800 mb-3">成功预警案例</h4>
+                <p class="text-sm text-gray-700 mb-3">
+                  <strong>2024年7月30日</strong>，河北省335国道承德段某边坡出现异常位移，系统及时预警并回传高清影像，成功避免滑坡灾害
+                  <a href="https://finance.sina.com.cn/wm/2025-08-27/doc-infnmrax7246762.shtml?froms=ggmp" class="citation-link">[70]</a>。
+                </p>
+                <div class="flex items-center text-sm text-green-700">
+                  <i class="fas fa-check-circle mr-2"></i>
+                  <span>应急响应效率显著提升</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- UAV Inspection -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-helicopter text-teal-600 mr-3"></i>
+              基于无人机视觉位移测量
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-cube text-blue-500 mr-2"></i>
+                  技术原理
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed">
+                  无人机搭载高清/微光相机进行航拍，通过摄影测量学和计算机视觉技术生成高精度三维实景模型，对比不同时期模型实现形变监测
+                  <a href="https://blog.csdn.net/m0_50022182/article/details/147839130" class="citation-link">[123]</a>。
+                </p>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-rocket text-green-500 mr-2"></i>
+                  系统特点
+                </h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-expand-arrows-alt text-teal-600 mt-1 mr-2 text-xs"></i>
+                    <span>超广视角，高空俯瞰全貌</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-bolt text-teal-600 mt-1 mr-2 text-xs"></i>
+                    <span>灵活高效，快速数据采集</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-shield-alt text-teal-600 mt-1 mr-2 text-xs"></i>
+                    <span>高危区域安全作业</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-road text-amber-500 mr-2"></i>
+                  应用场景
+                </h4>
+                <div class="space-y-3">
+                  <div class="bg-blue-50 p-2 rounded text-xs">
+                    <strong>公路智能巡检：</strong>自动识别路面病害、桥梁结构问题
+                  </div>
+                  <div class="bg-green-50 p-2 rounded text-xs">
+                    <strong>应急测绘：</strong>灾后快速获取影像数据，灾情评估
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg p-6 border border-teal-200">
+              <h4 class="font-semibold text-teal-800 mb-3">应用案例</h4>
+              <p class="text-gray-700 text-sm">
+                宁夏交建集团创新应用无人机巡检技术，打造智慧高速的"空中卫士"，显著提升了巡检效率和覆盖面
+                <a href="http://gzw.nx.gov.cn/gzjg/gzdt/202508/t20250826_4998904.html" class="citation-link">[125]</a>。
+              </p>
+            </div>
+          </div>
+
+          <!-- InSAR Monitoring -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-satellite text-teal-600 mr-3"></i>
+              InSAR地表沉降监测系统
+            </h3>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h4 class="font-semibold text-teal-800 mb-4">技术原理</h4>
+                  <p class="text-gray-700 leading-relaxed mb-4">
+                    合成孔径雷达干涉测量（InSAR）技术利用同一地区的不同时期SAR影像进行干涉处理，通过相位变化提取地表形变信息，实现毫米级精度监测
+                    <a href="https://www.opticsjournal.net/Articles/OJ5d08a6da19bab9c2/FullText" class="citation-link">[109]</a>。
+                  </p>
+                  <div class="space-y-2">
+                    <div class="flex items-center text-sm">
+                      <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
+                      <span class="text-gray-700">时序InSAR技术：PS-InSAR、SBAS-InSAR</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                      <i class="fas fa-ruler text-green-600 mr-2"></i>
+                      <span class="text-gray-700">毫米级高精度监测</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="InSAR地表沉降监测卫星影像" class="w-full h-64 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="InSAR地表沉降监测" referrerpolicy="no-referrer" />
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg p-6 border border-indigo-200">
+                <h4 class="font-semibold text-teal-800 mb-3">突出优势</h4>
+                <div class="space-y-3">
+                  <div class="flex items-start">
+                    <i class="fas fa-globe text-blue-600 mt-1 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">大范围覆盖</strong>
+                      <p class="text-xs text-gray-600">单幅影像覆盖数百至数千平方公里</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-crosshairs text-green-600 mt-1 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">毫米级精度</strong>
+                      <p class="text-xs text-gray-600">通过时序分析达到工程应用精度</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-history text-purple-600 mt-1 mr-3"></i>
+                    <div>
+                      <strong class="text-sm">历史数据回溯</strong>
+                      <p class="text-xs text-gray-600">利用存档数据分析历史形变过程</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6 border border-green-200">
+                <h4 class="font-semibold text-teal-800 mb-3">典型应用</h4>
+                <div class="space-y-3">
+                  <div class="bg-white p-3 rounded border">
+                    <strong class="text-sm text-blue-800">长春市</strong>
+                    <p class="text-xs text-gray-600">利用InSAR技术对全市地表沉降和交通基础设施形变进行系统性监测
+                      <a href="https://www.hanspub.org/journal/paperinformation?paperid=50159" class="citation-link">[110]</a>
+                    </p>
+                  </div>
+                  <div class="bg-white p-3 rounded border">
+                    <strong class="text-sm text-green-800">地铁沿线</strong>
+                    <p class="text-xs text-gray-600">厦门地铁2号线、合肥地铁沿线沉降监测</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beidou Monitoring -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6 flex items-center">
+              <i class="fas fa-compass text-teal-600 mr-3"></i>
+              监测北斗系统
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">技术原理</h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  基于我国自主建设的北斗卫星导航系统（BDS），结合RTK或PPP技术实现毫米级高精度定位，通过多传感器融合算法提供全面监测数据。
+                </p>
+                <div class="space-y-2">
+                  <div class="bg-blue-50 p-2 rounded text-xs">
+                    <strong>RTK/PPP技术：</strong>实时动态差分定位
+                  </div>
+                  <div class="bg-green-50 p-2 rounded text-xs">
+                    <strong>多传感器融合：</strong>北斗+加速度计+倾角计等
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">核心特点</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-sync-alt text-blue-600 mt-1 mr-2"></i>
+                    <span>实时动态三维监测，20Hz高频率输出</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-cube text-green-600 mt-1 mr-2"></i>
+                    <span>绝对三维位移信息，全面反映变形状态</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-layer-group text-purple-600 mt-1 mr-2"></i>
+                    <span>多灾害耦合监测能力，综合分析多源数据</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 4: System Architecture -->
+        <section id="system-architecture" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">系统架构与核心能力</h2>
+
+          <!-- System Architecture Diagram -->
+          <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200 mb-8">
+            <h3 class="text-xl font-semibold text-teal-800 mb-6 text-center">系统架构分层设计</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid" id="mermaid-2">
+                graph TB
+                subgraph "感知层"
+                A1["空基监测"]
+                A2["天基监测"]
+                A3["地基监测"]
+
+                A1 --> A11["无人机"]
+                A1 --> A12["高清相机"]
+                A1 --> A13["激光雷达"]
+
+                A2 --> A21["InSAR卫星"]
+                A2 --> A22["遥感数据"]
+
+                A3 --> A31["MEMS传感器"]
+                A3 --> A32["视觉位移系统"]
+                A3 --> A33["雷视一体机"]
+                A3 --> A34["监测北斗"]
+                end
+
+                subgraph "传输层"
+                B1["物联网技术"]
+                B2["无线通信"]
+
+                B1 --> B11["NB-IoT"]
+                B1 --> B12["LoRa"]
+
+                B2 --> B21["4G/5G网络"]
+                B2 --> B22["卫星通信"]
+                end
+
+                subgraph "边缘计算与AI分析层"
+                C1["边缘计算节点"]
+                C2["AI分析算法"]
+
+                C1 --> C11["数据本地化处理"]
+                C1 --> C12["实时预警"]
+
+                C2 --> C21["模式识别"]
+                C2 --> C22["异常检测"]
+                C2 --> C23["趋势预测"]
+                end
+
+                subgraph "平台与应用层"
+                D1["多灾害耦合监测平台"]
+                D2["安全韧性评估系统"]
+                D3["决策支持系统"]
+
+                D1 --> D11["数据融合分析"]
+                D1 --> D12["数字孪生"]
+
+                D2 --> D21["韧性评估"]
+                D2 --> D22["风险预测"]
+
+                D3 --> D31["智能决策"]
+                D3 --> D32["应急预案"]
+                end
+
+                A1 --> B1
+                A2 --> B2
+                A3 --> B1
+
+                B1 --> C1
+                B2 --> C1
+
+                C1 --> D1
+                C2 --> D1
+                C1 --> D2
+                C2 --> D2
+                C1 --> D3
+                C2 --> D3
+
+                style D1 fill:#f0fdfa,stroke:#0d9488,stroke-width:3px,color:#1f2937
+                style D2 fill:#f0fdfa,stroke:#0d9488,stroke-width:3px,color:#1f2937
+                style D3 fill:#b8925f,stroke:#8a6545,stroke-width:3px,color:#fff
+                style A1 fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style A2 fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style A3 fill:#ffffff,stroke:#14b8a6,stroke-width:2px,color:#1f2937
+                style C1 fill:#ffffff,stroke:#2dd4bf,stroke-width:2px,color:#1f2937
+                style C2 fill:#ffffff,stroke:#2dd4bf,stroke-width:2px,color:#1f2937
+                style B1 fill:#e8dcc7,stroke:#a67c52,stroke-width:2px,color:#1f2937
+                style B2 fill:#e8dcc7,stroke:#a67c52,stroke-width:2px,color:#1f2937
+              </div>
+            </div>
+          </div>
+
+          <!-- Perception Layer -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">感知层：多源传感器网络部署</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-helicopter text-blue-500 mr-2"></i>
+                  空基感知
+                </h4>
+                <p class="text-gray-700 text-sm mb-3">无人机平台搭载多种传感器</p>
+                <ul class="text-xs text-gray-600 space-y-1">
+                  <li>• 高清/微光相机</li>
+                  <li>• 激光雷达</li>
+                  <li>• 多光谱传感器</li>
+                </ul>
+                <div class="mt-3 p-2 bg-blue-50 rounded text-xs">
+                  <strong>应用：</strong>快速巡检、三维建模、应急测绘
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-satellite text-green-500 mr-2"></i>
+                  天基感知
+                </h4>
+                <p class="text-gray-700 text-sm mb-3">InSAR卫星遥感技术</p>
+                <ul class="text-xs text-gray-600 space-y-1">
+                  <li>• 大范围地表沉降监测</li>
+                  <li>• 毫米级精度</li>
+                  <li>• 历史数据回溯</li>
+                </ul>
+                <div class="mt-3 p-2 bg-green-50 rounded text-xs">
+                  <strong>应用：</strong>区域性地质灾害风险识别
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-microchip text-purple-500 mr-2"></i>
+                  地基感知
+                </h4>
+                <p class="text-gray-700 text-sm mb-3">各类轻量化传感器</p>
+                <ul class="text-xs text-gray-600 space-y-1">
+                  <li>• MEMS多参数传感器</li>
+                  <li>• 固定式视觉位移系统</li>
+                  <li>• 雷视一体机</li>
+                  <li>• 监测北斗系统</li>
+                </ul>
+                <div class="mt-3 p-2 bg-purple-50 rounded text-xs">
+                  <strong>应用：</strong>精细化实时监测
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transmission Layer -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">传输层：物联网与无线通信技术</h3>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <h4 class="font-semibold text-teal-800 mb-4">无线通信技术融合</h4>
+                  <div class="space-y-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                      <h5 class="font-medium text-blue-800 mb-2">LPWAN技术</h5>
+                      <p class="text-sm text-gray-700 mb-2">低功耗广域网：NB-IoT、LoRa</p>
+                      <ul class="text-xs text-gray-600 space-y-1">
+                        <li>• 极低功耗，电池工作数年</li>
+                        <li>• 广覆盖，穿透信号不佳环境</li>
+                        <li>• 适用于大规模分布式传感器</li>
+                      </ul>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                      <h5 class="font-medium text-green-800 mb-2">4G/5G蜂窝网络</h5>
+                      <p class="text-sm text-gray-700 mb-2">高带宽、低延迟移动通信</p>
+                      <ul class="text-xs text-gray-600 space-y-1">
+                        <li>• 高清视频流实时回传</li>
+                        <li>• 远程控制指令快速下发</li>
+                        <li>• 确保监测系统实时响应</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="物联网传感器网络通信设备" class="w-full h-80 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="物联网传感器网络" referrerpolicy="no-referrer" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edge Computing Layer -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">边缘计算与AI分析层</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-server text-blue-500 mr-3"></i>
+                  边缘计算节点
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  部署在靠近数据源的现场设备，如AI智能计算盒、边缘智能一体机，实现数据本地化处理和实时预警
+                  <a href="https://patents.google.com/patent/CN117493021A/zh" class="citation-link">[72]</a>。
+                </p>
+                <div class="space-y-3">
+                  <div class="bg-blue-50 p-3 rounded">
+                    <strong class="text-blue-800 text-sm">数据本地化处理</strong>
+                    <p class="text-xs text-gray-600 mt-1">数据清洗、滤波、降噪、特征提取，数据量压缩数个数量级</p>
+                  </div>
+                  <div class="bg-green-50 p-3 rounded">
+                    <strong class="text-green-800 text-sm">实时预警</strong>
+                    <p class="text-xs text-gray-600 mt-1">毫秒级异常检测和模式识别，本地化实时决策</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-brain text-green-500 mr-3"></i>
+                  AI分析算法
+                </h4>
+                <div class="space-y-4">
+                  <div class="border-l-4 border-blue-500 pl-3">
+                    <h5 class="font-medium text-blue-800 text-sm">模式识别</h5>
+                    <p class="text-xs text-gray-600">CNN等算法自动识别路面病害、结构缺陷</p>
+                  </div>
+                  <div class="border-l-4 border-green-500 pl-3">
+                    <h5 class="font-medium text-green-800 text-sm">异常检测</h5>
+                    <p class="text-xs text-gray-600">机器学习算法自动发现数据异常模式</p>
+                  </div>
+                  <div class="border-l-4 border-purple-500 pl-3">
+                    <h5 class="font-medium text-purple-800 text-sm">趋势预测</h5>
+                    <p class="text-xs text-gray-600">LSTM、GRU等时序模型预测未来趋势</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Platform Layer -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">平台与应用层</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-layer-group text-blue-500 mr-3"></i>
+                  多灾害耦合监测平台
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  构建综合分析多种致灾因子与结构响应复杂关联性的综合性管理平台，实现多源异构数据深度融合
+                  <a href="https://zhuanlan.zhihu.com/p/26334108731" class="citation-link">[55]</a>。
+                </p>
+                <div class="space-y-2">
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-puzzle-piece text-blue-600 mr-2"></i>
+                    <span class="text-gray-700">数据融合与耦合分析</span>
+                  </div>
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-cube text-green-600 mr-2"></i>
+                    <span class="text-gray-700">数字孪生模型构建</span>
+                  </div>
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-eye text-purple-600 mr-2"></i>
+                    <span class="text-gray-700">实时监测数据映射</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-shield-alt text-green-500 mr-3"></i>
+                  安全韧性评估系统
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  对基础设施在面临各种内外部扰动时的抵御、适应和恢复能力进行科学评估，提供智能化决策支持
+                  <a href="https://zrzyhgh.wuhan.gov.cn/gsggzx/zxwj/202507/P020250728359398199707.pdf" class="citation-link">[87]</a>。
+                </p>
+                <div class="space-y-2">
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                    <span class="text-gray-700">动态安全韧性评估</span>
+                  </div>
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-lightbulb text-green-600 mr-2"></i>
+                    <span class="text-gray-700">智能化决策支持</span>
+                  </div>
+                  <div class="flex items-center text-sm">
+                    <i class="fas fa-cogs text-purple-600 mr-2"></i>
+                    <span class="text-gray-700">应急预案生成</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 5: Applications -->
+        <section id="applications" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">实际应用案例与成效</h2>
+
+          <!-- Bridge Monitoring Case -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">桥梁健康监测：杭新景高速来公坞大桥</h3>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200 mb-6">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h4 class="font-semibold text-teal-800 mb-4">轻量化监测方案</h4>
+                  <p class="text-gray-700 leading-relaxed mb-4">
+                    针对中小跨径桥梁监测难题，采用基于<strong>MEMS多参数传感器</strong>的轻量化监测方案，在桥梁关键部位部署集成振动、倾斜、温度传感功能的设备
+                    <a href="http://zjjtkj.ijournals.cn/zjjtkj/article/html/20250115" class="citation-link">[114]</a>。
+                  </p>
+                  <div class="space-y-3">
                     <div class="flex items-center">
-                        <input id="remember-me" name="remember-me" type="checkbox" 
-                               class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-text-secondary">
-                            记住我
-                        </label>
+                      <i class="fas fa-microchip text-blue-600 mr-3"></i>
+                      <span class="text-sm text-gray-700">体积小巧，功耗极低</span>
                     </div>
-                    
-                    <a href="#" class="text-sm text-primary hover:text-light-blue">
-                        忘记密码?
-                    </a>
+                    <div class="flex items-center">
+                      <i class="fas fa-wifi text-green-600 mr-3"></i>
+                      <span class="text-sm text-gray-700">无线传输，太阳能供电</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-clock text-purple-600 mr-3"></i>
+                      <span class="text-sm text-gray-700">24小时不间断监控</span>
+                    </div>
+                  </div>
                 </div>
-                
                 <div>
-                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                        <i class="fa fa-sign-in mr-2"></i>
-                        登录
-                    </button>
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="桥梁上的MEMS监测设备" class="w-full h-64 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="MEMS传感器 桥梁监测" referrerpolicy="no-referrer" />
                 </div>
-            </form>
-            
-            <!-- 错误提示 -->
-            <div id="error-message" class="mt-4 text-center text-red-500 text-sm hidden">
-                <i class="fa fa-exclamation-circle mr-1"></i>
-                <span>用户名或密码错误，请重试</span>
+              </div>
             </div>
-        </div>
-        
-        <!-- 版权信息 -->
-        <div class="mt-6 text-center text-text-secondary text-sm">
-            <p>© 2025 湘交科数字运维平台</p>
-            <p class="mt-1">版权所有</p>
-        </div>
-    </div>
-    
+
+            <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6 border border-green-200">
+              <h4 class="font-semibold text-teal-800 mb-3">应用成效</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h5 class="font-medium text-green-800 mb-2">技术验证</h5>
+                  <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• 验证了轻量化监测技术的可行性</li>
+                    <li>• 实现了实时预警功能</li>
+                    <li>• 安装简便，无需中断交通</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-medium text-green-800 mb-2">管理提升</h5>
+                  <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• 从被动检测转向主动预警</li>
+                    <li>• 为管理部门提供决策依据</li>
+                    <li>• 有效防范安全事故发生</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slope Monitoring Case -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">公路边坡监测：河北335国道承德段</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">项目概况</h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  河北省交通运输厅在役公路试点边坡监测项目，选取包括<strong>335国道承德段</strong>在内的10处地质条件复杂、安全风险较高的公路边坡作为试点
+                  <a href="https://finance.sina.com.cn/wm/2025-08-27/doc-infnmrax7246762.shtml?froms=ggmp" class="citation-link">[70]</a>。
+                </p>
+                <div class="bg-yellow-50 p-3 rounded">
+                  <h5 class="font-medium text-yellow-800 text-sm mb-1">技术创新</h5>
+                  <p class="text-xs text-gray-700">引入"雷视融合多点位移边坡监测雷达系统"</p>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">关键技术</h4>
+                <div class="space-y-3">
+                  <div class="border-l-4 border-blue-500 pl-3">
+                    <h5 class="font-medium text-blue-800 text-sm">微波雷达监测</h5>
+                    <p class="text-xs text-gray-600">亚毫米级精度，大范围定量监测</p>
+                  </div>
+                  <div class="border-l-4 border-green-500 pl-3">
+                    <h5 class="font-medium text-green-800 text-sm">视觉AI传感器</h5>
+                    <p class="text-xs text-gray-600">高清影像人工复核，降低误报率</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+              <h4 class="font-semibold text-red-800 mb-3 flex items-center">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                成功预警案例
+              </h4>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-red-600">2024.07.30</div>
+                  <div class="text-sm text-gray-700">异常位移捕捉</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-orange-600">实时</div>
+                  <div class="text-sm text-gray-700">高清影像回传</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-green-600">成功</div>
+                  <div class="text-sm text-gray-700">灾害避免</div>
+                </div>
+              </div>
+              <p class="text-sm text-gray-700 mt-4 text-center">
+                系统及时捕捉边坡异常位移，经现场确认存在滑坡风险，相关部门立即采取应急措施，成功避免灾害事故
+              </p>
+            </div>
+          </div>
+
+          <!-- Intelligent Inspection -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">公路智能巡检：无人机与雷视融合技术</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-helicopter text-blue-500 mr-3"></i>
+                  无人机巡检应用
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  极视角公司为高速公路巡检定制开发的"无人机高速巡检系列算法"，实现全路段无死角、全天候精准监测
+                  <a href="https://www.extremevision.com.cn/cases/39.html" class="citation-link">[63]</a>。
+                </p>
+                <div class="space-y-2">
+                  <div class="flex items-center text-xs">
+                    <i class="fas fa-camera text-blue-600 mr-2"></i>
+                    <span class="text-gray-600">高清摄像头实时回传</span>
+                  </div>
+                  <div class="flex items-center text-xs">
+                    <i class="fas fa-search text-green-600 mr-2"></i>
+                    <span class="text-gray-600">AI算法自动识别违法行为</span>
+                  </div>
+                  <div class="flex items-center text-xs">
+                    <i class="fas fa-bell text-purple-600 mr-2"></i>
+                    <span class="text-gray-600">异常事件即时预警</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4 flex items-center">
+                  <i class="fas fa-satellite-dish text-green-500 mr-3"></i>
+                  雷视融合应用
+                </h4>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  苏州雷森电子科技有限公司的雷视融合一体机，在高速公路重点路段实现全天候、高精度监测
+                  <a href="https://www.raysunradar.com/zhihuigaosu/210.html" class="citation-link">[121]</a>。
+                </p>
+                <div class="bg-green-50 p-3 rounded">
+                  <div class="text-center">
+                    <div class="text-xl font-bold text-green-600">50ms</div>
+                    <div class="text-xs text-gray-600">端到端延迟</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border border-blue-200">
+              <h4 class="font-semibold text-teal-800 mb-3">闭环管理模式</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                  <i class="fas fa-search text-2xl text-blue-600 mb-2"></i>
+                  <div class="text-sm font-medium text-gray-700">识别</div>
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-bell text-2xl text-red-600 mb-2"></i>
+                  <div class="text-sm font-medium text-gray-700">预警</div>
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-cogs text-2xl text-green-600 mb-2"></i>
+                  <div class="text-sm font-medium text-gray-700">处置</div>
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-reply text-2xl text-purple-600 mb-2"></i>
+                  <div class="text-sm font-medium text-gray-700">反馈</div>
+                </div>
+              </div>
+              <p class="text-center text-sm text-gray-700 mt-3">
+                "识别-预警-处置-反馈"闭环管理模式，大幅提升应急响应效率
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 6: Future Outlook -->
+        <section id="future-outlook" class="mb-16">
+          <h2 class="text-3xl font-serif font-bold text-teal-800 mb-8 border-l-4 border-teal-600 pl-6">未来发展与展望</h2>
+
+          <!-- Technology Trends -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-teal-800 mb-6">技术发展趋势：更轻量、更智能、更融合</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-feather text-blue-500 mr-3"></i>
+                  更轻量
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-start">
+                    <i class="fas fa-atom text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">传感器微型化</strong>
+                      <p class="text-xs text-gray-600">基于新材料（柔性电子、纳米材料）的传感器</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-battery-three-quarters text-green-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">自供能技术</strong>
+                      <p class="text-xs text-gray-600">振动、温差、光能收集实现"永久续航"</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-brain text-green-500 mr-3"></i>
+                  更智能
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-start">
+                    <i class="fas fa-robot text-green-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">AI算法升级</strong>
+                      <p class="text-xs text-gray-600">从边缘轻量化模型到云端大模型</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-cube text-purple-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">数字孪生推演</strong>
+                      <p class="text-xs text-gray-600">仿真不同灾害场景下的结构响应</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-3 flex items-center">
+                  <i class="fas fa-layer-group text-purple-500 mr-3"></i>
+                  更融合
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-start">
+                    <i class="fas fa-satellite text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">空天地一体化</strong>
+                      <p class="text-xs text-gray-600">无缝集成各类传感器数据</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-database text-orange-600 mt-1 mr-2 text-xs"></i>
+                    <div>
+                      <strong class="text-sm">全息数据融合</strong>
+                      <p class="text-xs text-gray-600">构建动态基础设施健康画像</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Application Expansion -->
+            <div class="mb-12">
+              <h3 class="text-2xl font-semibold text-teal-800 mb-6">应用拓展：从重点设施到全域覆盖</h3>
+
+              <div class="bg-white rounded-lg p-8 shadow-lg border border-earth-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div class="text-center">
+                    <i class="fas fa-road text-4xl text-blue-600 mb-4"></i>
+                    <h4 class="font-semibold text-teal-800 mb-2">路网级应用</h4>
+                    <p class="text-sm text-gray-700">
+                      构建覆盖整个高速公路网、国省干道的桥梁群、边坡群协同监测网络
+                    </p>
+                  </div>
+                  <div class="text-center">
+                    <i class="fas fa-city text-4xl text-green-600 mb-4"></i>
+                    <h4 class="font-semibold text-teal-800 mb-2">城市级应用</h4>
+                    <p class="text-sm text-gray-700">
+                      城市立交桥、高架桥、地下管廊、地铁隧道等城市生命线工程监测
+                    </p>
+                  </div>
+                  <div class="text-center">
+                    <i class="fas fa-tree text-4xl text-orange-600 mb-4"></i>
+                    <h4 class="font-semibold text-teal-800 mb-2">乡村级应用</h4>
+                    <p class="text-sm text-gray-700">
+                      覆盖农村公路和中小型桥梁，补齐乡村基础设施安全管理短板
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Standard System -->
+            <div class="mb-12">
+              <h3 class="text-2xl font-semibold text-teal-800 mb-6">标准体系建设：规范技术应用与数据管理</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">技术标准</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-ruler text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <span>轻量化传感器技术规范与性能指标</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-tools text-green-600 mt-1 mr-2 text-xs"></i>
+                    <span>测试方法和安装规程标准化</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">数据标准</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-database text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <span>统一数据格式、接口协议和元数据标准</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-exchange-alt text-green-600 mt-1 mr-2 text-xs"></i>
+                    <span>实现不同厂商设备数据互联互通</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">评估标准</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-chart-bar text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <span>基于监测数据的安全状态评估标准</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-bell text-green-600 mt-1 mr-2 text-xs"></i>
+                    <span>预警阈值设定指南和风险评估流程</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 shadow-lg border border-earth-200">
+                <h4 class="font-semibold text-teal-800 mb-4">管理规范</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-shield-alt text-blue-600 mt-1 mr-2 text-xs"></i>
+                    <span>监测系统建设、运维管理规范</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-lock text-green-600 mt-1 mr-2 text-xs"></i>
+                    <span>数据安全和隐私保护规范</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            </div>
+
+            <!-- Safety Resilience -->
+            <div class="bg-gradient-to-r from-teal-50 to-earth-50 rounded-lg p-8 border border-teal-200">
+              <h3 class="text-2xl font-semibold text-teal-800 mb-6 text-center">提升基础设施安全韧性：从被动响应到主动预防</h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="text-center">
+                  <i class="fas fa-shield-alt text-4xl text-blue-600 mb-3"></i>
+                  <h4 class="font-semibold text-teal-800 mb-2">管理关口前移</h4>
+                  <p class="text-sm text-gray-700">
+                    通过精准早期预警和风险预测，在灾害发生前采取干预措施，变"亡羊补牢"为"防患于未然"
+                  </p>
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-sync-alt text-4xl text-green-600 mb-3"></i>
+                  <h4 class="font-semibold text-teal-800 mb-2">动态管理</h4>
+                  <p class="text-sm text-gray-700">
+                    利用实时连续监测数据，动态评估健康状态，实现基于状态的预测性维护
+                  </p>
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-handshake text-4xl text-purple-600 mb-3"></i>
+                  <h4 class="font-semibold text-teal-800 mb-2">系统协同</h4>
+                  <p class="text-sm text-gray-700">
+                    构建跨部门协同应急管理体系，形成快速响应、高效处置合力，最大限度降低灾害损失
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <div class="inline-block bg-teal-600 text-white px-6 py-3 rounded-lg">
+                  <strong class="text-lg">全面提升国家基础设施安全韧性</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Scripts -->
     <script>
-        // 切换密码可见性
-        document.getElementById('toggle-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#f0fdfa',
+                primaryTextColor: '#1f2937',
+                primaryBorderColor: '#0d9488',
+                lineColor: '#6b7280',
+                secondaryColor: '#ffffff',
+                tertiaryColor: '#e8dcc7',
+                background: '#faf8f5',
+                mainBkg: '#ffffff',
+                secondBkg: '#f0fdfa',
+                tertiaryBkg: '#e8dcc7',
+                nodeBkg: '#ffffff',
+                clusterBkg: '#f0fdfa',
+                edgeLabelBackground: 'rgba(255, 255, 255, 0.9)',
+                nodeTextColor: '#1f2937',
+                textColor: '#1f2937',
+                fontFamily: 'Inter, sans-serif'
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 20
+            },
+            sequence: {
+                useMaxWidth: false,
+                wrap: true
+            },
+            gantt: {
+                useMaxWidth: false
             }
         });
         
-        // 登录表单提交
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('remember-me').checked;
-            
-            // 简单的登录验证
-            if (username === 'admin' && password === 'admin') {
-                // 如果勾选了记住我，设置cookie
-                if (rememberMe) {
-                    setCookie('isLoggedIn', 'true', 7); // 7天有效期
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+            const mermaidElement = container.querySelector('.mermaid');
+            let scale = 1;
+            let isDragging = false;
+            let startX, startY, translateX = 0, translateY = 0;
+
+            // 触摸相关状态
+            let isTouch = false;
+            let touchStartTime = 0;
+            let initialDistance = 0;
+            let initialScale = 1;
+            let isPinching = false;
+
+            // Zoom controls
+            const zoomInBtn = container.querySelector('.zoom-in');
+            const zoomOutBtn = container.querySelector('.zoom-out');
+            const resetBtn = container.querySelector('.reset-zoom');
+            const fullscreenBtn = container.querySelector('.fullscreen');
+
+            function updateTransform() {
+                mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                if (scale > 1) {
+                container.classList.add('zoomed');
                 } else {
-                    // 会话cookie
-                    setCookie('isLoggedIn', 'true');
+                container.classList.remove('zoomed');
                 }
-                
-                // 跳转到主页面
-                window.location.href = 'index.html';
-            } else {
-                // 显示错误信息
-                const errorMessage = document.getElementById('error-message');
-                errorMessage.classList.remove('hidden');
-                
-                // 3秒后自动隐藏错误信息
-                setTimeout(() => {
-                    errorMessage.classList.add('hidden');
-                }, 3000);
+
+                mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
             }
+
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', () => {
+                scale = Math.min(scale * 1.25, 4);
+                updateTransform();
+                });
+            }
+
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', () => {
+                scale = Math.max(scale / 1.25, 0.3);
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+                updateTransform();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+                });
+            }
+
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                });
+            }
+
+            // Mouse Events
+            mermaidElement.addEventListener('mousedown', (e) => {
+                if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                mermaidElement.style.cursor = 'grabbing';
+                updateTransform();
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging && !isTouch) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            // 获取两点之间的距离
+            function getTouchDistance(touch1, touch2) {
+                return Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+                );
+            }
+
+            // Touch Events - 触摸事件处理
+            mermaidElement.addEventListener('touchstart', (e) => {
+                isTouch = true;
+                touchStartTime = Date.now();
+
+                if (e.touches.length === 1) {
+                // 单指拖动
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+
+                } else if (e.touches.length === 2) {
+                // 双指缩放
+                isPinching = true;
+                isDragging = false;
+
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                initialDistance = getTouchDistance(touch1, touch2);
+                initialScale = scale;
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && isDragging && !isPinching) {
+                // 单指拖动
+                const touch = e.touches[0];
+                translateX = touch.clientX - startX;
+                translateY = touch.clientY - startY;
+                updateTransform();
+
+                } else if (e.touches.length === 2 && isPinching) {
+                // 双指缩放
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = getTouchDistance(touch1, touch2);
+
+                if (initialDistance > 0) {
+                    const newScale = Math.min(Math.max(
+                    initialScale * (currentDistance / initialDistance),
+                    0.3
+                    ), 4);
+                    scale = newScale;
+                    updateTransform();
+                }
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchend', (e) => {
+                // 重置状态
+                if (e.touches.length === 0) {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                // 延迟重置isTouch，避免鼠标事件立即触发
+                setTimeout(() => {
+                    isTouch = false;
+                }, 100);
+                } else if (e.touches.length === 1 && isPinching) {
+                // 从双指变为单指，切换为拖动模式
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+                }
+
+                updateTransform();
+            });
+
+            mermaidElement.addEventListener('touchcancel', (e) => {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                setTimeout(() => {
+                isTouch = false;
+                }, 100);
+
+                updateTransform();
+            });
+
+            // Enhanced wheel zoom with better center point handling
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const rect = container.getBoundingClientRect();
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                // Adjust translation to zoom towards center
+                if (newScale !== scale) {
+                const scaleDiff = newScale / scale;
+                translateX = translateX * scaleDiff;
+                translateY = translateY * scaleDiff;
+                scale = newScale;
+
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+
+                updateTransform();
+                }
+            });
+
+            // Initialize display
+            updateTransform();
+            });
+        }
+
+        // Initialize Mermaid Controls
+        initializeMermaidControls();
+        
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 20;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
         
-        // 设置cookie
-        function setCookie(name, value, days = 0) {
-            let expires = '';
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = '; expires=' + date.toUTCString();
-            }
-            document.cookie = name + '=' + (value || '')  + expires + '; path=/';
-        }
-        
-        // 页面加载完成后检查是否已登录
-        document.addEventListener('DOMContentLoaded', function() {
-            // 检查cookie
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith('isLoggedIn=')) {
-                    const value = cookie.substring('isLoggedIn='.length);
-                    if (value === 'true') {
-                        // 已登录，跳转到主页面
-                        window.location.href = 'index.html';
-                        return;
-                    }
-                }
-            }
+        // Highlight active TOC item on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-link');
             
-            // 自动聚焦到用户名输入框
-            document.getElementById('username').focus();
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('bg-teal-100', 'text-teal-800');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('bg-teal-100', 'text-teal-800');
+                }
+            });
+        });
+        
+        // Toggle TOC on mobile
+        const toc = document.getElementById('toc');
+        const tocToggleButton = document.getElementById('toc-toggle-button');
+        const tocCloseButton = document.getElementById('toc-close-button');
+        
+        tocToggleButton.addEventListener('click', function() {
+            toc.classList.toggle('-translate-x-full');
+        });
+        
+        tocCloseButton.addEventListener('click', function() {
+            toc.classList.add('-translate-x-full');
+        });
+        
+        // Close TOC when clicking on a link (on mobile)
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 1024) {
+                    toc.classList.add('-translate-x-full');
+                }
+            });
         });
     </script>
-</body>
+  </body>
+
 </html>
